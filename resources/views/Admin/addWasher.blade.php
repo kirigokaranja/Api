@@ -228,7 +228,7 @@
             <li style="float:right"><a href="/login">Login</a></li>@endif
 </ul>
 <div class="container">
-    <form method="post" action="/Vehicle" enctype="multipart/form-data" style="margin: 3%">
+    <form method="post" action="/Washer" enctype="multipart/form-data" style="margin: 3%">
         {{csrf_field()}}
         <h3>Washer Details</h3>
         <svg width="100%" height="100%">
@@ -278,7 +278,10 @@
                 " H" +
                 that.button.offsetLeft;
             console.log(that.dPath);
-            that.path.setAttribute("d", that.dPath);
+            if(that.path.setAttribute("d", that.dPath);)
+            {
+                that.path.setAttribute("/Washer");
+            }
         },
 
         animate: function(e) {

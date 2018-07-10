@@ -278,7 +278,10 @@
                 " H" +
                 that.button.offsetLeft;
             console.log(that.dPath);
-            that.path.setAttribute("d", that.dPath);
+            if(that.path.setAttribute("d", that.dPath);)
+            {
+                that.path.setAttribute("/Vehicle");
+            }
         },
 
         animate: function(e) {
