@@ -57,48 +57,7 @@
 </head>
 <body>
 
-<ul>
-    <li><a href="#home">Home</a></li>
-    @if(session("user_type")=="3")
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Branch</a>
-            <div class="dropdown-content">
-                <a href="{{'/Branches'}}">All Branches</a>
-                <a href="{{'/Branch'}}">Add Branch</a>
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Service</a>
-            <div class="dropdown-content">
-                <a href="{{'/Services'}}">All Services</a>
-                <a href="{{'/Service'}}">Add Service</a>
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Vehicle</a>
-            <div class="dropdown-content">
-                <a href="{{'/Vehicles'}}">All Vehicles</a>
-                <a href="{{'/Vehicle'}}">Add Vehicle</a>
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Package</a>
-            <div class="dropdown-content">
-                <a href="{{'/Packages'}}">All Packages</a>
-                <a href="{{'/Package'}}">Add Package</a>
-            </div>
-        </li>
-        <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Manager</a>
-            <div class="dropdown-content">
-                <a href="{{'/Managers'}}">All Managers</a>
-                <a href="{{'/Manager'}}">Add Manager</a>
-            </div>
-        </li>
-        <li style="float:right"><a href="/logout">Logout</a></li>
-    @endif
-    <li style="float:right"><a href="/login">Login</a></li>
-</ul>
+@include('navigation bar.nav')
 
 <div class="container" style="margin-top: 5%">
     <div class="row">

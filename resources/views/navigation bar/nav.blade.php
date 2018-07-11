@@ -101,7 +101,7 @@
                 @endif
             </li>
             <li style="float:right"><a href="/logout">Logout</a></li>
-            {{--<li style="float:right"><a href="/assignWasher">Washer <span style="color: red;font-size: x-small">{{$booked}}</span></a></li>--}}
+            <li style="float:right"><a href="/assignWasher">Washer</a></li>
             <li style="float:right"><a href="/confirmWash">Washed?</a></li>
             <li style="float:right"><a href="/confirmPayment">Payment</a></li>
 

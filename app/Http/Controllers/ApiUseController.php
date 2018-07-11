@@ -138,7 +138,6 @@ class ApiUseController extends Controller
 
         return response()->json($response);
     }
-
     public function allVehicles(){
 
         $vehicle = Vehicle::all();
