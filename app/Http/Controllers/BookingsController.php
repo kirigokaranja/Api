@@ -33,7 +33,7 @@ class BookingsController extends Controller
     }
     public function AssignWasher($id){
         $book = Book::find($id);
-        $book->washer_id = request('washer');
+        $book->washer_id = '1';
         $book->book_date = request('book_date');
         $book->book_time = request('book_time');
         $book->vehicle_id = request('vehicle_id');
