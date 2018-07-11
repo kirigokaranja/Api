@@ -61,8 +61,115 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .container {
+            position: relative;
+            width: 80%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        form {
+            position: relative;
+            width: 100%;
+            margin: 50px auto;
+            padding: 50px;
+            background: white;
+            text-align: center;
+        }
+
+        input {
+            display: inline-block;
+            width: 100%;
+            margin: 20px 0;
+            padding: 10px;
+            border: 2px dashed lightblue;
+            outline: none;
+            font-size: 20px;
+            font-family: 'Economica', 'Arial', sans-serif;
+            font-weight: 400;
+            transition: all 0.2s ease;
+        }
+
+        input:focus { border-color: deepskyblue; }
+
+        button {
+            position: absolute;
+            left: calc(50% - 150px / 2);
+            bottom: calc(- 50px / 2);
+            width: 150px;
+            height: 50px;
+            padding: 10px 15px;
+            margin-top: 20px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: white;
+            font-family: 'Economica', 'Arial', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            background: mediumblue;
+            transition: all 0.2s ease;
+        }
+
+        button:hover { background: midnightblue; }
+
+        button.valid,
+        button.valid:hover { background: mediumseagreen; }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        svg path {
+            stroke-width: 10px;
+            stroke: mediumseagreen;
+            fill: none;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        svg path.hidden { opacity: 0; }
+
+        svg path.animate { -webkit-animation: drawBorder 1s linear; animation: drawBorder 1s linear; }
+
+        @-webkit-keyframes drawBorder {
+            from {
+                stroke-dasharray: 4000;
+                stroke-dashoffset: 4000;
+            }
+
+            to {
+                stroke-dasharray: 4000;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes drawBorder {
+            from {
+                stroke-dasharray: 4000;
+                stroke-dashoffset: 4000;
+            }
+
+            to {
+                stroke-dasharray: 4000;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
     </style>
     <title>Add Branch</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Economica:400,700"/>
 </head>
 <body>
 
@@ -113,16 +220,94 @@
         @else
             <li style="float:right"><a href="/login">Login</a></li>@endif
 </ul>
-<form method="post" action="/Branch" enctype="multipart/form-data" style="margin-top: 3%">
+<div class="container">
+    <form method="post" action="/Branch" enctype="multipart/form-data" style="margin: 3%">
+        {{csrf_field()}}
+        <h3>Branch Details</h3>
+        <svg width="100%" height="100%">
+            <path class="hidden" d="M0 0 H200 V200 H0 Z"></path>
+        </svg>
+
+        Branch Name: <input type="text" name="branch_name" title="" value="{{$branch->branch_name or ''}}"><br><br>
+        Branch Latitude: <input type="text" name="latitude" title="" value="{{$branch->latitude or ''}}"><br><br>
+        Branch Longitude: <input type="text" name="longitude" title="" value="{{$branch->longitude or ''}}"><br><br>
+        Branch Opening time: <input type="text" name="opening_time" title="" value="{{$branch->opening_time or ''}}"><br><br>
+        Branch Closing time: <input type="text" name="closing_time" title="" value="{{$branch->closing_time or ''}}"><br><br>
+        <input type="hidden" name="id" value="{{$branch->id or ''}}">
+        <button type="submit">Submit Branch</button>
+    </form>
+</div>
+
+<!--<form method="post" action="/Branch" enctype="multipart/form-data" style="margin-top: 3%">
     {{csrf_field()}}
 
-    Branch Name: <input type="text" name="branch_name" title="" value="{{$branch->branch_name or ''}}"><br><br>
+        Branch Name: <input type="text" name="branch_name" title="" value="{{$branch->branch_name or ''}}"><br><br>
     Branch Latitude: <input type="text" name="latitude" title="" value="{{$branch->latitude or ''}}"><br><br>
     Branch Longitude: <input type="text" name="longitude" title="" value="{{$branch->longitude or ''}}"><br><br>
     Branch Opening time: <input type="text" name="opening_time" title="" value="{{$branch->opening_time or ''}}"><br><br>
     Branch Closing time: <input type="text" name="closing_time" title="" value="{{$branch->closing_time or ''}}"><br><br>
     <input type="hidden" name="id" value="{{$branch->id or ''}}">
     <button type="submit">Submit Branch</button>
-</form>
+</form>-->
 </body>
+
+<script>
+    var formAnimator = {
+        init: function() {
+            this.form = document.querySelector("form");
+            this.button = document.querySelector("button");
+            this.path = document.querySelector("path");
+            this.createPath();
+            this.form.addEventListener("submit", this.animate, false);
+            window.addEventListener("resize", this.createPath);
+        },
+
+        createPath: function() {
+            console.log("creating path");
+            var that = formAnimator;
+            that.dPath =
+                "M" +
+                (that.button.offsetLeft + that.button.offsetWidth) +
+                " " +
+                that.form.offsetHeight +
+                " H" +
+                that.form.offsetWidth +
+                " V0 H0 V" +
+                that.form.offsetHeight +
+                " H" +
+                that.button.offsetLeft;
+            console.log(that.dPath);
+            if(that.path.setAttribute("d", that.dPath);)
+            {
+                that.path.setAttribute("/Branch");
+            }
+        },
+
+        animate: function(e) {
+            var that = formAnimator;
+            e.preventDefault();
+            that.path.classList.add("animate");
+            that.path.classList.remove("hidden");
+            that.button.classList.add("valid");
+            that.path.addEventListener(
+                "webkitAnimationEnd",
+                function() {
+                    this.classList.remove("animate");
+                    this.classList.add("hidden");
+                    that.button.classList.remove("valid");
+                },
+                false
+            );
+        }
+    };
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        function() {
+            formAnimator.init();
+        },
+        false
+    );
+
+</script>
 </html>
